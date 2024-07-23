@@ -21,6 +21,7 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.RECORD_AUDIO
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -36,23 +37,26 @@ class PermissionManager(private val context: Context) {
             READ_EXTERNAL_STORAGE,
             CAMERA,
             ACCESS_FINE_LOCATION,
-            ACCESS_COARSE_LOCATION
+            ACCESS_COARSE_LOCATION,
+            RECORD_AUDIO
         )
         val REQUIRED_PERMISSIONS_POST_T = arrayOf(
             READ_MEDIA_IMAGES,
             CAMERA,
             ACCESS_FINE_LOCATION,
-            ACCESS_COARSE_LOCATION
+            ACCESS_COARSE_LOCATION,
+            RECORD_AUDIO
         )
     }
 
     data class State(
         val hasStorageAccess: Boolean,
         val hasCameraAccess: Boolean,
-        val hasLocationAccess: Boolean
+        val hasLocationAccess: Boolean,
+        val hasMicrophoneAccess: Boolean
     ) {
         val hasAllAccess: Boolean
-            get() = hasStorageAccess && hasCameraAccess && hasLocationAccess
+            get() = hasStorageAccess && hasCameraAccess && hasLocationAccess && hasMicrophoneAccess
     }
 
     private val _state = MutableStateFlow(
@@ -60,6 +64,7 @@ class PermissionManager(private val context: Context) {
             hasStorageAccess = hasAccess(READ_EXTERNAL_STORAGE) || hasAccess(READ_MEDIA_IMAGES),
             hasCameraAccess = hasAccess(CAMERA),
             hasLocationAccess = hasAccess(listOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)),
+            hasMicrophoneAccess = hasAccess(RECORD_AUDIO),
         )
     )
     val state = _state.asStateFlow()
@@ -84,7 +89,8 @@ class PermissionManager(private val context: Context) {
         _state.value = State(
             hasStorageAccess = hasStorageAccess,
             hasCameraAccess = permissions[CAMERA] ?: _state.value.hasCameraAccess,
-            hasLocationAccess = hasLocationAccess
+            hasLocationAccess = hasLocationAccess,
+            hasMicrophoneAccess = permissions[RECORD_AUDIO] ?: _state.value.hasMicrophoneAccess,
         )
     }
 
@@ -92,7 +98,8 @@ class PermissionManager(private val context: Context) {
         val newState = State(
             hasStorageAccess = hasAccess(READ_EXTERNAL_STORAGE) || hasAccess(READ_MEDIA_IMAGES),
             hasCameraAccess = hasAccess(CAMERA),
-            hasLocationAccess = hasAccess(ACCESS_FINE_LOCATION) && hasAccess(ACCESS_COARSE_LOCATION)
+            hasLocationAccess = hasAccess(ACCESS_FINE_LOCATION) && hasAccess(ACCESS_COARSE_LOCATION),
+            hasMicrophoneAccess = hasAccess(RECORD_AUDIO),
         )
 
         _state.emit(newState)

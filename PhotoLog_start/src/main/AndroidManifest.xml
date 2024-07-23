@@ -19,6 +19,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.photolog_start">
 
+    <queries>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+    </queries>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <!-- region Storage permissions -->
     <!--  TODO: Remove permissions as the Photo Picker doesn't need it  -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -33,6 +40,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- endregion -->
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:name="com.example.photolog_start.PhotoLogApplication"

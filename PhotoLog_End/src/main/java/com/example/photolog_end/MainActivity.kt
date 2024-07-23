@@ -60,9 +60,10 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
 
-                    val startNavigation = Screens.Home.route
+                    val startNavigation = Screens.Permissions.route
 
                     NavHost(navController = navController, startDestination = startNavigation) {
+                        composable(Screens.Permissions.route) { PermissionScreen(navController) }
                         composable(Screens.Home.route) { HomeScreen(navController) }
                         composable(Screens.AddLog.route) { AddLogScreen(navController) }
                         composable(Screens.Camera.route) { CameraScreen(navController) }

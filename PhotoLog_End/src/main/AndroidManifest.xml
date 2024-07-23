@@ -18,13 +18,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.photolog_end">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
     <!-- region Camera permission -->
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- endregion -->
 
     <!-- region Location permissions -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- endregion -->
+
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
     <application
         android:name="com.example.photolog_end.PhotoGoodApplication"

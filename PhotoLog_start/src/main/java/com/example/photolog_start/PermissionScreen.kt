@@ -134,6 +134,19 @@ fun PermissionScreen(
                     )
                 }
             )
+            Divider()
+            ListItem(
+                headlineText = { Text("Microphone access") },
+                supportingText = { Text("Record audio when creating a log") },
+                trailingContent = { PermissionAccessIcon(state.value.hasMicrophoneAccess) },
+                leadingContent = {
+                    Icon(
+                        Icons.Filled.Explore,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.surfaceTint
+                    )
+                }
+            )
             Spacer(Modifier.height(32.dp))
             if (state.value.hasAllAccess) {
                 FilledTonalButton(onClick = { navController.navigate(Screens.Home.route) }) {

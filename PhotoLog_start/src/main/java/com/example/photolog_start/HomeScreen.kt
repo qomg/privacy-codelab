@@ -47,9 +47,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -61,6 +63,11 @@ fun HomeScreen(
     navController: NavHostController,
     viewModel: HomeViewModel = viewModel(factory = HomeViewModelFactory())
 ) {
+
+    val context = LocalContext.current
+    SideEffect {
+        SpeechToText.startListeningWithoutDialog(context)
+    }
 
     LaunchedEffect(Unit) { viewModel.loadLogs() }
 
